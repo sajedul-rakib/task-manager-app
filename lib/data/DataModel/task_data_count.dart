@@ -18,7 +18,7 @@ class TaskDataCount {
     }
   }
 
-  TaskDataCount() {
+  TaskDataCount() { {
     taskStatusCountDataModel.data?.forEach((element) {
       if (element.sId == "New") {
         newTask = element.sum;

@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   //push sum of task data of local variable
-  void pushDataOnCountVariable() {
+  void pushDataOnCountVariable()async {
     taskStatusCountDataModel.data?.forEach((element) {
       if (element.sId == "New") {
         newTask = element.sum;
