@@ -23,7 +23,7 @@ class TaskDataCount {
           newTask = element.sum;
         } else if (element.sId == 'Complete') {
           completeTask = element.sum;
-        } else if (element.sId == 'Pogress') {
+        } else if (element.sId == 'Progress') {
           progressTask = element.sum;
         } else if (element.sId == 'Cancelled') {
           cancelTask = element.sum;

@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_project/data/network_utils.dart';
 import 'package:task_manager_project/data/urls.dart';
@@ -23,14 +24,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController lastNameETController = TextEditingController();
   TextEditingController mobileETController = TextEditingController();
   TextEditingController passwordETController = TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool _inProgress = false;
 
   Future<void> signIn() async {
     _inProgress = true;
     setState(() {});
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState?.validate() ?? true) {
       final result = await NetworkUtils.postMethod(Urls.registration, body: {
         "email": emailETController.text.trim(),
         "firstName": firstNameETController.text.trim(),
@@ -38,6 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "mobile": mobileETController.text.trim(),
         "password": passwordETController.text
       });
+
       if (mounted) {
         if (result != null && result['status'] == 'success') {
           showToastMessage(
@@ -65,13 +67,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: ScreenBackground(
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
+      body: SafeArea(
+        child: ScreenBackground(
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,9 +89,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: emailETController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return "Enter your validate email";
+                          return "Enter your email";
                         } else {
-                          return null;
+                          if (value != null && EmailValidator.validate(value)) {
+                            return null;
+                          } else {
+                            return "Enter your valid email";
+                          }
                         }
                       },
                     ),
@@ -101,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: firstNameETController,
                       validator: (value) {
                         if (value?.isEmpty ?? true) {
-                          return "Enter your validate email";
+                          return "Enter your  first name";
                         } else {
                           return null;
                         }
@@ -141,14 +147,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     InputFormField(
                       hintText: "Password",
                       controller: passwordETController,
-                      validator: (value) {
+                      isObscure: true,
+                      validator: (String? value) {
                         if (value?.isEmpty ?? true) {
                           return "Enter a unique password";
                         } else {
-                          return null;
+                          if (value != null &&
+                              !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                                  .hasMatch(value)) {
+                            return "Enter password at least 8 characters with mix up \nCapital letter,normal letter and aslo special character";
+                          } else {
+                            null;
+                          }
                         }
                       },
-                      isObscure: true,
                     ),
                     const SizedBox(
                       height: 16,

@@ -43,13 +43,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
           showUnselectedLabels: true,
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.newspaper), label: "New Task"),
+                icon: Icon(Icons.checklist_rounded), label: "New Task"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.mark_as_unread), label: "Completed"),
+                icon: Icon(Icons.check_rounded), label: "Completed"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.credit_card_off), label: "Canceled"),
+                icon: Icon(Icons.close_rounded), label: "Canceled"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard), label: "Progress"),
+                icon: Icon(Icons.coffee_rounded), label: "Progress"),
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
@@ -67,7 +67,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
             size: 36,
             color: Colors.white,
           ),
-
         ),
         body: SafeArea(
           child: Column(

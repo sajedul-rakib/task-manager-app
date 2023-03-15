@@ -183,6 +183,19 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                             hintText: "Password",
                             controller: _passwordETController,
                             isObscure: true,
+                            validator: (String? value) {
+                              if (value?.isEmpty ?? true) {
+                                return "Enter a unique password";
+                              } else {
+                                if (value != null &&
+                                    !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                                        .hasMatch(value)) {
+                                  return "Enter password at least 8 characters with mix up \nCapital letter,normal letter and aslo special character";
+                                } else {
+                                  null;
+                                }
+                              }
+                            },
                           ),
                         ],
                       )),
@@ -194,7 +207,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                           ? customCircularProgressIndicator()
                           : const Icon(Icons.arrow_circle_right_outlined),
                       onTap: () async {
-                        updateProfile();
+                        if(_formKey.currentState?.validate() ?? true){
+                          updateProfile();
+                        }
                       })
                 ],
               ),

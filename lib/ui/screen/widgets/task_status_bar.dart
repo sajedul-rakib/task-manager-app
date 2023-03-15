@@ -16,7 +16,7 @@ class TaskStatusContainer extends StatelessWidget {
     return Expanded(
       child: Card(
         elevation: 0,
-        color: Colors.grey.shade400,
+        color: Colors.grey.shade300,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
           child: Center(

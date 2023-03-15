@@ -55,6 +55,19 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                             hintText: "New Password",
                             controller: setPassETController,
                             isObscure: true,
+                            validator: (String? value) {
+                              if (value?.isEmpty ?? true) {
+                                return "Enter a unique password";
+                              } else {
+                                if (value != null &&
+                                    !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                                        .hasMatch(value)) {
+                                  return "Enter password at least 8 characters with mix up \nCapital letter,normal letter and aslo special character";
+                                } else {
+                                  null;
+                                }
+                              }
+                            },
                           ),
                           const SizedBox(
                             height: 16,
@@ -109,7 +122,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                                   context, "Reset password successfully");
                             } else {
                               showToastMessage(
-                                  context, "Reset password unsuccessfully");
+                                  context, "Reset password failed", true);
                             }
                           }
                           _inProgress = false;

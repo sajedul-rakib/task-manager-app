@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_manager_project/data/auth_user_data.dart';
@@ -57,7 +58,6 @@ class _LoginScreenState extends State<LogInScreen> {
               MaterialPageRoute(builder: (context) => const BottomNavigation()),
               (route) => false);
         }
-
         _inProgress = false;
         setState(() {});
       } else {
@@ -90,14 +90,19 @@ class _LoginScreenState extends State<LogInScreen> {
                   height: 8.0,
                 ),
                 InputFormField(
-                  hintText: "Email",
-                  controller: emailETController,
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return "Enter your valid email";
-                    }
-                  },
-                ),
+                    hintText: "Email",
+                    controller: emailETController,
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return "Enter your email";
+                      } else {
+                        if (value != null && EmailValidator.validate(value)) {
+                          null;
+                        } else {
+                          return "Enter your valid email";
+                        }
+                      }
+                    }),
                 const SizedBox(
                   height: 16.0,
                 ),
