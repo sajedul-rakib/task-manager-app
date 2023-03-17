@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_manager_project/data/auth_user_data.dart';
@@ -10,12 +12,18 @@ class UsersHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? base64Image = AuthUtils.photo;
+    var imageDecode = const Base64Decoder().convert(base64Image!);
     return ListTile(
-      leading: const CircleAvatar(
-          backgroundColor: Colors.white,
-          child: Icon(
-            Icons.person,
-            color: Colors.grey,
+      leading: CircleAvatar(
+        radius: 25,
+          backgroundColor: Colors.transparent,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.memory(
+              imageDecode,
+              fit: BoxFit.fitWidth,
+            ),
           )),
       title: Text(
         "${AuthUtils.firstName ?? ''} ${AuthUtils.lastName ?? ''}",
