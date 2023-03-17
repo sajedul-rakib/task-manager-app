@@ -28,6 +28,8 @@ class _LoginScreenState extends State<LogInScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _inProgress = false;
+  bool isVisiblePassword = false;
+  bool isHidePassword = true;
 
   Future<void> logIn() async {
     _inProgress = true;
@@ -114,7 +116,15 @@ class _LoginScreenState extends State<LogInScreen> {
                       return "Enter your password";
                     }
                   },
-                  isObscure: true,
+                  isObscure: isHidePassword,
+                  isVisiblePassword: isVisiblePassword
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+                  changeShowPasswordState: () {
+                    isHidePassword=!isHidePassword;
+                    isVisiblePassword = !isVisiblePassword;
+                    setState(() {});
+                  },
                 ),
                 const SizedBox(
                   height: 16,

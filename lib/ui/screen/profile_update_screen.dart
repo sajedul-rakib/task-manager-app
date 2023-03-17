@@ -28,6 +28,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   final TextEditingController _passwordETController = TextEditingController();
 
   bool _inProgress = false;
+  bool isHidePassword = true;
+  bool isVisiblePassword = false;
   XFile? pickedImage;
   String? base64Image;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -182,7 +184,6 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                           InputFormField(
                             hintText: "Password",
                             controller: _passwordETController,
-                            isObscure: true,
                             validator: (String? value) {
                               if (value?.isEmpty ?? true) {
                                 return "Enter a unique password";
@@ -195,6 +196,15 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                                   null;
                                 }
                               }
+                            },
+                            isObscure: isHidePassword,
+                            isVisiblePassword: isVisiblePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            changeShowPasswordState: () {
+                              isHidePassword=!isHidePassword;
+                              isVisiblePassword = !isVisiblePassword;
+                              setState(() {});
                             },
                           ),
                         ],

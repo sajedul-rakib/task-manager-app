@@ -27,6 +27,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool _inProgress = false;
+  bool isHidePassword = true;
+  bool isVisiblePassword = false;
 
   Future<void> signIn() async {
     _inProgress = true;
@@ -147,7 +149,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     InputFormField(
                       hintText: "Password",
                       controller: passwordETController,
-                      isObscure: true,
                       validator: (String? value) {
                         if (value?.isEmpty ?? true) {
                           return "Enter a unique password";
@@ -160,6 +161,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             null;
                           }
                         }
+                      },
+                      isObscure: isHidePassword,
+                      isVisiblePassword: isVisiblePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      changeShowPasswordState: () {
+                        isHidePassword=!isHidePassword;
+                        isVisiblePassword = !isVisiblePassword;
+                        setState(() {});
                       },
                     ),
                     const SizedBox(

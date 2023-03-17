@@ -9,6 +9,8 @@ class InputFormField extends StatelessWidget {
     this.maxLines,
     this.validator,
     this.readOnly,
+    this.isVisiblePassword,
+    this.changeShowPasswordState
   }) : super(key: key);
 
   final String? hintText;
@@ -16,6 +18,8 @@ class InputFormField extends StatelessWidget {
   final bool? isObscure;
   final int? maxLines;
   final bool? readOnly;
+  final IconData? isVisiblePassword;
+  final VoidCallback? changeShowPasswordState;
 
   final Function(String?)? validator;
 
@@ -34,6 +38,11 @@ class InputFormField extends StatelessWidget {
         }
       },
       decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: changeShowPasswordState,
+          icon: Icon(isVisiblePassword),
+        ),
+        suffixIconColor: Colors.grey,
         fillColor: Colors.white,
         hintText: hintText,
         filled: true,
