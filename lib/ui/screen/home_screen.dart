@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     getTaskStatusCountApi();
     getNewTask();
-    TaskDataCount.getTaskStatusCountApi();
+    pushDataOnCountVariable();
     super.initState();
   }
 
@@ -67,12 +67,16 @@ class _HomeScreenState extends State<HomeScreen> {
     taskStatusCountDataModel.data?.forEach((element) {
       if (element.sId == "New") {
         newTask = element.sum;
+        setState(() {});
       } else if (element.sId == "Complete") {
         completeTask = element.sum;
+        setState(() {});
       } else if (element.sId == "Progress") {
         progressTask = element.sum;
+        setState(() {});
       } else if (element.sId == "Cancelled") {
         cancelTask = element.sum;
+        setState(() {});
       }
     });
   }
