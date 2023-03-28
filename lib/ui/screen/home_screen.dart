@@ -43,12 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
     final result = await NetworkUtils.getMethod(Urls.newTaskApiUrl);
 
-    if (mounted) {
-      if (result != null && result["status"] == 'success') {
-        taskDataModel = TaskDataModel.fromJson(result);
-      } else {
-        showToastMessage(context, "Unable to fetch new task!Try again", true);
-      }
+    if (result != null && result["status"] == 'success') {
+      taskDataModel = TaskDataModel.fromJson(result);
+    } else {
+      showToastMessage("Unable to fetch new task!Try again", true);
     }
     _inProgress = false;
     setState(() {});
@@ -65,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   //push sum of task data of local variable
-  void pushDataOnCountVariable()async {
+  void pushDataOnCountVariable() async {
     taskStatusCountDataModel.data?.forEach((element) {
       if (element.sId == "New") {
         newTask = element.sum;

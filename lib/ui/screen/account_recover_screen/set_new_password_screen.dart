@@ -11,6 +11,7 @@ import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/show_toast_message.dart';
 import 'package:task_manager_project/ui/screen/widgets/subtitle_text.dart';
 import 'package:task_manager_project/ui/screen/widgets/text_title.dart';
+import 'package:get/get.dart';
 
 class SetNewPasswordScreen extends StatefulWidget {
   const SetNewPasswordScreen({Key? key, required this.email, required this.otp})
@@ -109,22 +110,15 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                                 "OTP": widget.otp,
                                 "password": confirmPassETController.text
                               });
-                          if (mounted) {
-                            if (response != null &&
-                                response['status'] == 'success') {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LogInScreen()),
-                                  (route) => false);
-                              showToastMessage(
-                                  context, "Reset password successfully");
-                            } else {
-                              showToastMessage(
-                                  context, "Reset password failed", true);
-                            }
+
+                          if (response != null &&
+                              response['status'] == 'success') {
+                            Get.offAll(const LogInScreen());
+                            showToastMessage("Reset password successfully");
+                          } else {
+                            showToastMessage("Reset password failed", true);
                           }
+
                           _inProgress = false;
                           setState(() {});
                         }
@@ -135,12 +129,8 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                   AskingHaveAccount(
                       questionTitle: "Have account?",
                       doThat: "Sign In",
-                      callback: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LogInScreen()),
-                            (route) => false);
+                      onPress: () {
+                        Get.offAll(const LogInScreen());
                       })
                 ],
               ),

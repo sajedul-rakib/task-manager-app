@@ -16,9 +16,9 @@ deleteTaskDialog(String id, VoidCallback cb, context,[VoidCallback? rf]) {
                     final response =
                         await NetworkUtils.getMethod(Urls.deleteTask(id));
                     if (response != null && response['status']=='success') {
-                      showToastMessage(context, "Delete Task Successfully");
+                      showToastMessage("Delete Task Successfully");
                     } else {
-                      showToastMessage(context, "Unable to delete task");
+                      showToastMessage("Unable to delete task");
                     }
                     Navigator.pop(context);
                     cb();

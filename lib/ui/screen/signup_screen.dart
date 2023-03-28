@@ -10,6 +10,7 @@ import 'package:task_manager_project/ui/screen/widgets/input_form_field.dart';
 import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/show_toast_message.dart';
 import 'package:task_manager_project/ui/screen/widgets/text_title.dart';
+import 'package:get/get.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -42,26 +43,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
         "password": passwordETController.text
       });
 
-      if (mounted) {
-        if (result != null && result['status'] == 'success') {
-          showToastMessage(
-            context,
-            "Registration successfully",
-          );
-          emailETController.clear();
-          firstNameETController.clear();
-          lastNameETController.clear();
-          mobileETController.clear();
-          passwordETController.clear();
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const LogInScreen()));
-          _inProgress = false;
-          setState(() {});
-        } else {
-          showToastMessage(context, "Registration failed!Try Again", true);
-          _inProgress = false;
-          setState(() {});
-        }
+      if (result != null && result['status'] == 'success') {
+        showToastMessage(
+          "Registration successfully",
+        );
+        emailETController.clear();
+        firstNameETController.clear();
+        lastNameETController.clear();
+        mobileETController.clear();
+        passwordETController.clear();
+        Get.to(const LogInScreen());
+        _inProgress = false;
+        setState(() {});
+      } else {
+        showToastMessage("Registration failed!Try Again", true);
+        _inProgress = false;
+        setState(() {});
       }
     }
   }
@@ -167,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ? Icons.visibility
                           : Icons.visibility_off,
                       changeShowPasswordState: () {
-                        isHidePassword=!isHidePassword;
+                        isHidePassword = !isHidePassword;
                         isVisiblePassword = !isVisiblePassword;
                         setState(() {});
                       },
@@ -191,12 +188,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AskingHaveAccount(
                         questionTitle: "Have account?",
                         doThat: "Sign In",
-                        callback: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LogInScreen()),
-                              (route) => false);
+                        onPress: () {
+                          Get.offAll(const LogInScreen());
                         })
                   ],
                 ),

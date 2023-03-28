@@ -30,12 +30,10 @@ class _CompleteTaskScreenState extends State<CompleteTaskScreen> {
     setState(() {});
     final response = await NetworkUtils.getMethod(Urls.completeTaskApiUrl);
 
-    if (mounted) {
-      if (response != null && response['status'] == 'success') {
-        taskDataModel = TaskDataModel.fromJson(response);
-      } else {
-        showToastMessage(context, "Unable to get complete task", true);
-      }
+    if (response != null && response['status'] == 'success') {
+      taskDataModel = TaskDataModel.fromJson(response);
+    } else {
+      showToastMessage("Unable to get complete task", true);
     }
     _inProgress = false;
     setState(() {});

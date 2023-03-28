@@ -9,6 +9,7 @@ import 'package:task_manager_project/ui/screen/widgets/input_form_field.dart';
 import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/show_toast_message.dart';
 import 'package:task_manager_project/ui/screen/widgets/text_title.dart';
+import 'package:get/get.dart';
 
 class CreateNewTaskScreen extends StatefulWidget {
   const CreateNewTaskScreen({Key? key}) : super(key: key);
@@ -100,27 +101,20 @@ class _CreateNewTaskScreenState extends State<CreateNewTaskScreen> {
                                         descriptionETController.text.trim(),
                                     "status": "New"
                                   });
-                              if (mounted) {
-                                if (result != null &&
-                                    result["status"] == 'success') {
-                                  subjectETController.clear();
-                                  descriptionETController.clear();
-                                  showToastMessage(
-                                      context, "New task added successfully");
 
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const BottomNavigation()),
-                                      (route) => false);
-                                } else {
-                                  showToastMessage(context,
-                                      "New task added failed!Try again", true);
-                                }
-                                inProgress = false;
-                                setState(() {});
+                              if (result != null &&
+                                  result["status"] == 'success') {
+                                subjectETController.clear();
+                                descriptionETController.clear();
+                                showToastMessage("New task added successfully");
+
+                                Get.offAll(const BottomNavigation());
+                              } else {
+                                showToastMessage(
+                                    "New task added failed!Try again", true);
                               }
+                              inProgress = false;
+                              setState(() {});
                             }
                           })
                     ],

@@ -4,7 +4,7 @@ import 'package:task_manager_project/ui/screen/complete_task_screen.dart';
 import 'package:task_manager_project/ui/screen/home_screen.dart';
 import 'package:task_manager_project/ui/screen/progress_task_screen.dart';
 import 'package:task_manager_project/ui/screen/widgets/user_profile_header.dart';
-
+import 'package:get/get.dart';
 import '../create_new_task_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -56,11 +56,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const CreateNewTaskScreen()),
-            );
+            Get.to(const CreateNewTaskScreen());
           },
           child: const Icon(
             Icons.add,

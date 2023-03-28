@@ -14,7 +14,7 @@ import 'package:task_manager_project/ui/screen/widgets/input_form_field.dart';
 import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/show_toast_message.dart';
 import 'package:task_manager_project/ui/screen/widgets/text_title.dart';
-
+import 'package:get/get.dart';
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
 
@@ -51,22 +51,19 @@ class _LoginScreenState extends State<LogInScreen> {
             result["data"]["mobile"],
             result["data"]["photo"],
             result["token"]);
-        if (mounted) {
+
           //success toast  message
-          showToastMessage(context, "Log in successfully");
+          showToastMessage( "Log in successfully");
           //Navigate to MainBottomNavigation
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const BottomNavigation()),
-              (route) => false);
-        }
+          Get.offAll(const BottomNavigation());
+
         _inProgress = false;
         setState(() {});
       } else {
-        if (mounted) {
-          showToastMessage(context, "Enter your valid email & password", true);
+
+          showToastMessage("Enter your valid email & password", true);
         }
-      }
+
       _inProgress = false;
       setState(() {});
     }
@@ -147,11 +144,7 @@ class _LoginScreenState extends State<LogInScreen> {
                   children: [
                     TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const AccountRecoverByMail()));
+                          Get.to(const AccountRecoverByMail());
                         },
                         style: const ButtonStyle(
                             padding: MaterialStatePropertyAll(EdgeInsets.zero)),
@@ -165,12 +158,8 @@ class _LoginScreenState extends State<LogInScreen> {
                     AskingHaveAccount(
                         questionTitle: 'Don\'t have account?',
                         doThat: 'Sign Up',
-                        callback: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()),
-                          );
+                        onPress: () {
+                          Get.to(const SignUpScreen());
                         })
                   ],
                 )),

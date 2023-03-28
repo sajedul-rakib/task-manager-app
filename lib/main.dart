@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_project/ui/screen/splash_screen.dart';
+import 'package:get/get.dart';
 
 void main() {
-  runApp( const TaskManager());
+  runApp(const TaskManager());
 }
 
 class TaskManager extends StatefulWidget {
@@ -13,11 +14,9 @@ class TaskManager extends StatefulWidget {
 }
 
 class _TaskManagerState extends State<TaskManager> {
-
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );

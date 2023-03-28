@@ -6,12 +6,12 @@ class AskingHaveAccount extends StatelessWidget {
   const AskingHaveAccount({
     super.key,
     required this.questionTitle,
-    required this.doThat, required this.callback,
+    required this.doThat, required this.onPress,
   });
 
   final String questionTitle;
   final String doThat;
-  final VoidCallback callback;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class AskingHaveAccount extends StatelessWidget {
       children: [
         Text(questionTitle,style: subtitleTextStyle,),
         TextButton(
-            onPressed: callback,
+            onPressed: onPress,
             style: const ButtonStyle(
                 padding: MaterialStatePropertyAll(EdgeInsets.zero)),
             child: Text(

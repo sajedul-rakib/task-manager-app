@@ -13,6 +13,7 @@ import 'package:task_manager_project/ui/screen/widgets/custom_progress_indicator
 import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/subtitle_text.dart';
 import 'package:task_manager_project/ui/screen/widgets/text_title.dart';
+import 'package:get/get.dart';
 
 class PinVerificationScreen extends StatefulWidget {
   const PinVerificationScreen({Key? key, required this.email})
@@ -100,18 +101,13 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                         final response = await NetworkUtils.getMethod(
                             Urls.recoverOptVerifyUrl(
                                 widget.email, pinFormETController.text));
-                        if (mounted) {
-                          if (response != null &&
-                              response['status'] == 'success') {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SetNewPasswordScreen(
-                                          email: widget.email,
-                                          otp: pinFormETController.text,
-                                        )),
-                                (route) => false);
-                          }
+
+                        if (response != null &&
+                            response['status'] == 'success') {
+                          Get.offAll(SetNewPasswordScreen(
+                              email: widget.email,
+                              otp: pinFormETController.text));
+
                           _inProgress = false;
                           setState(() {});
                         }
@@ -123,12 +119,8 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                 AskingHaveAccount(
                     questionTitle: "Have account?",
                     doThat: "Sign In",
-                    callback: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LogInScreen()),
-                          (route) => false);
+                    onPress: () {
+                      Get.offAll(const LogInScreen());
                     })
               ],
             ),

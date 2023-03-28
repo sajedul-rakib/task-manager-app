@@ -6,6 +6,7 @@ import 'package:task_manager_project/data/auth_user_data.dart';
 import 'package:task_manager_project/ui/screen/login_screen.dart';
 import 'package:task_manager_project/ui/screen/profile_update_screen.dart';
 import 'package:task_manager_project/ui/screen/widgets/show_toast_message.dart';
+import 'package:get/get.dart';
 
 class UsersHeader extends StatelessWidget {
   const UsersHeader({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class UsersHeader extends StatelessWidget {
     var imageDecode = const Base64Decoder().convert(base64Image!);
     return ListTile(
       leading: CircleAvatar(
-        radius: 25,
+          radius: 25,
           backgroundColor: Colors.transparent,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50),
@@ -46,21 +47,17 @@ class UsersHeader extends StatelessWidget {
           Icons.logout,
           color: Colors.white,
         ),
-        onPressed: () async {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const LogInScreen()),
-              (route) => false);
-          await AuthUtils.clearLoggedUserData();
-          showToastMessage(context, "Log out successfully");
+        onPressed: () {
+          Future.delayed(const Duration(seconds: 2)).then((value) async {
+            await AuthUtils.clearLoggedUserData();
+            Get.offAll(const LogInScreen());
+            showToastMessage("Log out successfully");
+          });
         },
       ),
       tileColor: Colors.green.shade400,
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const ProfileUpdateScreen()));
+        Get.to(const ProfileUpdateScreen());
       },
     );
   }

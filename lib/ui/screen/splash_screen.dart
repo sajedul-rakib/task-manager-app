@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:task_manager_project/data/auth_user_data.dart';
 import 'package:task_manager_project/ui/screen/login_screen.dart';
 import 'package:task_manager_project/ui/screen/widgets/bottom_navigation_bar.dart';
@@ -25,18 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkUserAreLogged() async {
     AuthUtils.getLoggedUserData();
     final isUserLogged = await AuthUtils.isUserLogged();
-    if (mounted) {
-      if (isUserLogged) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const BottomNavigation()),
-            (route) => false);
-      } else {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const LogInScreen()),
-            (route) => false);
-      }
+
+    if (isUserLogged) {
+      Get.offAll(const BottomNavigation());
+    } else {
+      Get.offAll(const LogInScreen());
     }
   }
 

@@ -105,12 +105,12 @@ showChageTaskStatus(context, String taskId, VoidCallback cb,
                         if (response != null &&
                             response['status'] == 'success') {
                           showToastMessage(
-                              context, "Change status successfully");
+                             "Change status successfully");
                           Navigator.pop(context);
                           cb();
                           rf!();
                         } else {
-                          showToastMessage(context, "Unable to change status");
+                          showToastMessage( "Unable to change status");
                         }
                         _inProgress = false;
                       }),

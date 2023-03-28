@@ -11,6 +11,7 @@ import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/text_title.dart';
 
 import '../widgets/subtitle_text.dart';
+import 'package:get/get.dart';
 
 class AccountRecoverByMail extends StatefulWidget {
   const AccountRecoverByMail({Key? key}) : super(key: key);
@@ -75,17 +76,10 @@ class _AccountRecoverByMailState extends State<AccountRecoverByMail> {
                             Urls.recoverAccountByEmail(
                                 emailETController.text.trim()));
 
-                        if (mounted) {
-                          if (response != null &&
-                              response['status'] == 'success') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PinVerificationScreen(
-                                        email: emailETController.text.trim(),
-                                      )),
-                            );
-                          }
+                        if (response != null &&
+                            response['status'] == 'success') {
+                          Get.to(PinVerificationScreen(
+                              email: emailETController.text.trim()));
 
                           _inProgress = false;
                           setState(() {});
@@ -98,12 +92,8 @@ class _AccountRecoverByMailState extends State<AccountRecoverByMail> {
                 AskingHaveAccount(
                     questionTitle: "Have account?",
                     doThat: "Sign In",
-                    callback: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LogInScreen()),
-                          (route) => false);
+                    onPress: () {
+                      Get.offAll(const LogInScreen());
                     })
               ],
             ),

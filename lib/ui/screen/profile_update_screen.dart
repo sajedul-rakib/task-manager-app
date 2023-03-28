@@ -12,6 +12,7 @@ import 'package:task_manager_project/ui/screen/widgets/input_form_field.dart';
 import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/show_toast_message.dart';
 import 'package:task_manager_project/ui/screen/widgets/text_title.dart';
+import 'package:get/get.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {
   const ProfileUpdateScreen({Key? key}) : super(key: key);
@@ -66,20 +67,15 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     final response =
         await NetworkUtils.postMethod(Urls.profileUpdate, body: body);
 
-    if (mounted) {
-      if (response != null && response['status'] == 'success') {
-        showToastMessage(context, "Profile update successfully");
-        await AuthUtils.clearLoggedUserData();
-        if (mounted) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const SplashScreen()),
-              (route) => false);
-        }
-      } else {
-        showToastMessage(context, "Profile update failed", true);
-      }
+    if (response != null && response['status'] == 'success') {
+      showToastMessage("Profile update successfully");
+      await AuthUtils.clearLoggedUserData();
+
+      Get.offAll(const SplashScreen());
+    } else {
+      showToastMessage("Profile update failed", true);
     }
+
     _inProgress = false;
     setState(() {});
   }
@@ -202,7 +198,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             changeShowPasswordState: () {
-                              isHidePassword=!isHidePassword;
+                              isHidePassword = !isHidePassword;
                               isVisiblePassword = !isVisiblePassword;
                               setState(() {});
                             },
@@ -217,7 +213,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                           ? customCircularProgressIndicator()
                           : const Icon(Icons.arrow_circle_right_outlined),
                       onTap: () async {
-                        if(_formKey.currentState?.validate() ?? true){
+                        if (_formKey.currentState?.validate() ?? true) {
                           updateProfile();
                         }
                       })
@@ -243,11 +239,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   pickedImage =
                       await ImagePicker().pickImage(source: ImageSource.camera);
 
-                  if (mounted) {
-                    if (pickedImage != null) {
-                      setState(() {});
-                      Navigator.pop(context);
-                    }
+                  if (pickedImage != null) {
+                    setState(() {});
+                    Get.back();
                   }
                 },
                 leading: const Icon(Icons.camera),
@@ -257,11 +251,10 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 onTap: () async {
                   pickedImage = await ImagePicker()
                       .pickImage(source: ImageSource.gallery);
-                  if (mounted) {
-                    if (pickedImage != null) {
-                      setState(() {});
-                      Navigator.pop(context);
-                    }
+
+                  if (pickedImage != null) {
+                    setState(() {});
+                    Get.back();
                   }
                 },
                 leading: const Icon(Icons.image),

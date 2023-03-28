@@ -7,6 +7,7 @@ import 'package:task_manager_project/ui/screen/widgets/screen_background.dart';
 import 'package:task_manager_project/ui/screen/widgets/show_toast_message.dart';
 import 'package:task_manager_project/ui/screen/widgets/single_task_component.dart';
 import 'package:task_manager_project/ui/screen/widgets/status_change_bottom_sheet.dart';
+import 'package:get/get.dart';
 
 class ProgressTaskScreen extends StatefulWidget {
   const ProgressTaskScreen({Key? key}) : super(key: key);
@@ -29,13 +30,13 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
     _inProgress = true;
     setState(() {});
     final response = await NetworkUtils.getMethod(Urls.progressTaskApiUrl);
-    if (mounted) {
-      if (response != null && response['status'] == 'success') {
-        taskDataModel = TaskDataModel.fromJson(response);
-      } else {
-        showToastMessage(context, "Unable to get complete task", true);
-      }
+
+    if (response != null && response['status'] == 'success') {
+      taskDataModel = TaskDataModel.fromJson(response);
+    } else {
+      showToastMessage("Unable to get complete task", true);
     }
+
     _inProgress = false;
     setState(() {});
   }
